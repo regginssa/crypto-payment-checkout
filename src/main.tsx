@@ -6,11 +6,14 @@ import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import WalletProvider from "./providers/WalletProvider.tsx";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <WalletProvider>
-      <App />
-    </WalletProvider>
+    <BrowserRouter>
+      <WalletProvider>
+        <App />
+      </WalletProvider>
+    </BrowserRouter>
   </StrictMode>
 );

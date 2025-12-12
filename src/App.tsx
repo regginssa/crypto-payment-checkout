@@ -18,6 +18,8 @@ import { useAccount, useWalletClient } from "wagmi";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection } from "@solana/web3.js";
 import { ArrowRightIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
+import { useSearchParams } from "react-router-dom";
+import decryptNodeAES from "./utils/decrypt";
 
 /**
  * Local fallback types (remove these if you already export them from ./config/crypto)
@@ -109,6 +111,9 @@ function App() {
   const [paymentMessage, setPaymentMessage] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [params] = useSearchParams();
+  const [session, setSession] = useState<any>(null);
+  const [txSignature, setTxSignature] = useState<string>("");
 
   // Wagmi (EVM)
   const { isConnected, address: evmAddress } = useAccount();
@@ -122,6 +127,34 @@ function App() {
     () => new Connection("https://api.mainnet-beta.solana.com", "confirmed"),
     []
   );
+
+  const encryptionKey = import.meta.env.VITE_ENCRYPTION_KEY;
+
+  useEffect(() => {
+    const token = params.get("token");
+    const sessionId = params.get("sessionId");
+    if (!token || !sessionId) return;
+
+    console.log("Token:", token);
+    console.log("Session ID:", sessionId);
+    console.log("Encryption Key:", encryptionKey);
+
+    try {
+      const decrypted = decryptNodeAES(token, encryptionKey);
+      console.log("Decrypted token:", decrypted);
+
+      if (!decrypted) {
+        throw new Error("Decryption returned empty string");
+      }
+
+      const parsed = JSON.parse(decrypted);
+      console.log("Parsed JSON:", parsed);
+
+      setSession({ ...parsed, sessionId });
+    } catch (err) {
+      console.error("Failed to parse session token:", err);
+    }
+  }, [params]);
 
   // Generate payment address whenever amount/selectedCrypto changes
   useEffect(() => {
