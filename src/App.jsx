@@ -15,12 +15,7 @@ import {
 import { useAccount, useWalletClient } from "wagmi";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection } from "@solana/web3.js";
-import { processEVMPayment, processSolanaPayment } from "./utils/payment";
-import {
-  ArrowRightIcon,
-  CheckCircleIcon,
-  ArrowPathIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowRightIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 
 const cryptoOptions = [
   { key: "ETH", ...CRYPTO_CONFIG.ETH },
