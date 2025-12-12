@@ -2,17 +2,29 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 
-const CryptoDropdown = ({ label, options = [], selected, onSelect }) => {
+interface CryptoDropdownProps {
+  label: string;
+  options: any[];
+  selected: any;
+  onSelect: (val: any) => void;
+}
+
+const CryptoDropdown: React.FC<CryptoDropdownProps> = ({
+  label,
+  options = [],
+  selected,
+  onSelect,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="relative">
-      <label className="font-medium text-primary-dark">{label}</label>
+      <label className="font-medium text-[#0F172A]">{label}</label>
 
       <button
         className={`mt-2 w-full flex flex-row items-center justify-between p-3 rounded-lg border ${
-          isOpen ? "border-primary" : "border-primary-border"
-        } transition-all duration-300 hover:border-primary bg-white`}
+          isOpen ? "border-primary" : "border-[#E2E8F0]"
+        } transition-all duration-300 hover:border-[#1B51EC] bg-white`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex flex-row items-center gap-2">
@@ -20,12 +32,12 @@ const CryptoDropdown = ({ label, options = [], selected, onSelect }) => {
             src={selected.icon}
             alt={selected.name}
             className="w-6 h-6"
-            onError={(e) => {
+            onError={(e: any) => {
               e.target.style.display = "none";
             }}
           />
 
-          <span className="font-medium text-primary-dark">
+          <span className="font-medium text-[#0F172A]">
             {selected.name.toUpperCase()}
           </span>
         </div>
@@ -45,7 +57,7 @@ const CryptoDropdown = ({ label, options = [], selected, onSelect }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 w-full bg-white rounded-lg p-2 shadow-xl z-50 mt-2 max-h-64 overflow-y-auto border border-primary-border"
+            className="absolute top-full left-0 w-full bg-white rounded-lg p-2 shadow-xl z-50 mt-2 max-h-64 overflow-y-auto border border-[#E2E8F0]"
           >
             {options.map((option, index) => (
               <motion.button
@@ -61,11 +73,11 @@ const CryptoDropdown = ({ label, options = [], selected, onSelect }) => {
                   src={option.icon}
                   alt={option.name}
                   className="w-6 h-6"
-                  onError={(e) => {
+                  onError={(e: any) => {
                     e.target.style.display = "none";
                   }}
                 />
-                <span className="font-medium text-primary-dark">
+                <span className="font-medium text-[#0F172A]">
                   {option.name.toUpperCase()}
                 </span>
               </motion.button>

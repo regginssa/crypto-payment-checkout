@@ -1,7 +1,19 @@
 import { motion } from "framer-motion";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
-const PaymentAmountInput = ({ amount, setAmount, selectedCrypto, error }) => {
+interface PaymentAmountInputProps {
+  amount: any;
+  setAmount: (val: any) => void;
+  selectedCrypto: any;
+  error: any;
+}
+
+const PaymentAmountInput: React.FC<PaymentAmountInputProps> = ({
+  amount,
+  setAmount,
+  selectedCrypto,
+  error,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -9,7 +21,7 @@ const PaymentAmountInput = ({ amount, setAmount, selectedCrypto, error }) => {
       transition={{ duration: 0.3 }}
       className="w-full"
     >
-      <label className="block font-medium text-primary-dark mb-2">
+      <label className="block font-medium text-[#0F172A] mb-2">
         Payment Amount
       </label>
       <div className="relative">
@@ -21,10 +33,10 @@ const PaymentAmountInput = ({ amount, setAmount, selectedCrypto, error }) => {
           placeholder="0.00"
           step="0.000000001"
           min="0"
-          className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300 ${
+          className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B51EC] transition-all duration-300 ${
             error
               ? "border-red-500 focus:ring-red-500"
-              : "border-primary-border focus:border-primary"
+              : "border-[#E2E8F0] focus:border-primary"
           }`}
         />
         <div className="absolute right-4 top-1/2 transform -translate-y-1/2">

@@ -1,9 +1,16 @@
 import { motion } from "framer-motion";
-import { useAccount, useConnectModal } from "@rainbow-me/rainbowkit";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useAccount } from "wagmi";
 
-const WalletConnectButton = ({ selectedCrypto }) => {
+interface WalletConnectButtonProps {
+  selectedCrypto: any;
+}
+
+const WalletConnectButton: React.FC<WalletConnectButtonProps> = ({
+  selectedCrypto,
+}) => {
   const { isConnected, address } = useAccount();
   const { openConnectModal } = useConnectModal();
   const solanaWallet = useWallet();
@@ -33,14 +40,14 @@ const WalletConnectButton = ({ selectedCrypto }) => {
         {!isConnected ? (
           <button
             onClick={openConnectModal}
-            className="w-full py-3 px-4 bg-primary text-white rounded-lg font-semibold hover:bg-primary-blue transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="w-full py-3 px-4 bg-[#1B51EC] text-white rounded-lg font-semibold hover:bg-[#1B59EC] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Connect EVM Wallet
           </button>
         ) : (
-          <div className="w-full p-3 bg-primary-light rounded-lg border border-primary-border">
+          <div className="w-full p-3 bg-primary-light rounded-lg border border-[#E2E8F0]">
             <p className="text-xs text-primary-gray mb-1">Connected Wallet</p>
-            <p className="text-sm font-mono text-primary-dark truncate">
+            <p className="text-sm font-mono text-[#0F172A] truncate">
               {walletAddress}
             </p>
           </div>
@@ -58,12 +65,12 @@ const WalletConnectButton = ({ selectedCrypto }) => {
         className="w-full"
       >
         <div className="flex justify-center">
-          <WalletMultiButton className="!bg-primary hover:!bg-primary-blue !transition-all !duration-300" />
+          <WalletMultiButton className="bg-[#1B51EC] hover:bg-[#1B59EC] transition-all duration-300" />
         </div>
         {solanaWallet.connected && walletAddress && (
-          <div className="w-full mt-3 p-3 bg-primary-light rounded-lg border border-primary-border">
+          <div className="w-full mt-3 p-3 bg-primary-light rounded-lg border border-[#E2E8F0]">
             <p className="text-xs text-primary-gray mb-1">Connected Wallet</p>
-            <p className="text-sm font-mono text-primary-dark truncate">
+            <p className="text-sm font-mono text-[#0F172A] truncate">
               {walletAddress}
             </p>
           </div>

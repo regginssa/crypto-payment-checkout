@@ -3,7 +3,14 @@ import { motion } from "framer-motion";
 import { CheckCircleIcon, ClipboardIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-const PaymentQRCode = ({
+interface PaymentQRCodeProps {
+  paymentURI: any;
+  paymentAddress: any;
+  amount: any;
+  selectedCrypto: any;
+}
+
+const PaymentQRCode: React.FC<PaymentQRCodeProps> = ({
   paymentURI,
   paymentAddress,
   amount,
@@ -26,11 +33,11 @@ const PaymentQRCode = ({
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-sm mx-auto bg-white p-6 rounded-2xl shadow-xl border border-primary-border"
+      className="w-full max-w-sm mx-auto bg-white p-6 rounded-2xl shadow-xl border border-[#E2E8F0]"
     >
       <div className="flex flex-col items-center gap-4">
-        <h3 className="text-lg font-semibold text-primary-dark">Scan to Pay</h3>
-        <div className="bg-white p-4 rounded-xl border-2 border-primary-border">
+        <h3 className="text-lg font-semibold text-[#0F172A]">Scan to Pay</h3>
+        <div className="bg-white p-4 rounded-xl border-2 border-[#E2E8F0]">
           <QRCodeSVG
             value={paymentURI || paymentAddress}
             size={200}
@@ -40,19 +47,19 @@ const PaymentQRCode = ({
         </div>
         <div className="w-full text-center space-y-2">
           <p className="text-sm text-primary-gray">Amount</p>
-          <p className="text-2xl font-bold text-primary-dark">
+          <p className="text-2xl font-bold text-[#0F172A]">
             {amount} {selectedCrypto.symbol}
           </p>
         </div>
         <div className="w-full space-y-2">
           <p className="text-xs text-primary-gray">Payment Address</p>
           <div className="flex items-center gap-2 p-2 bg-primary-light rounded-lg">
-            <p className="text-xs font-mono text-primary-dark flex-1 truncate">
+            <p className="text-xs font-mono text-[#0F172A] flex-1 truncate">
               {paymentAddress}
             </p>
             <button
               onClick={copyToClipboard}
-              className="p-1 hover:bg-primary-border rounded transition-colors"
+              className="p-1 hover:bg-[#E2E8F0] rounded transition-colors"
             >
               {copied ? (
                 <CheckCircleIcon className="w-4 h-4 text-green-500" />

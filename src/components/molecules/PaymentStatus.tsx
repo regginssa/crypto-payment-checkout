@@ -6,8 +6,26 @@ import {
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 
-const PaymentStatus = ({ status, message }) => {
-  const statusConfig = {
+type PaymentStatusType = "pending" | "processing" | "success" | "failed";
+
+interface PaymentStatusProps {
+  status: PaymentStatusType | null;
+  message?: string;
+}
+
+const PaymentStatus: React.FC<PaymentStatusProps> = ({ status, message }) => {
+  if (!status) return null;
+
+  const statusConfig: Record<
+    PaymentStatusType,
+    {
+      icon: React.FC<React.SVGProps<SVGSVGElement>>;
+      color: string;
+      bgColor: string;
+      borderColor: string;
+      animate?: string;
+    }
+  > = {
     pending: {
       icon: ClockIcon,
       color: "text-yellow-500",
@@ -52,7 +70,7 @@ const PaymentStatus = ({ status, message }) => {
               className={`w-6 h-6 ${config.color} ${config.animate || ""}`}
             />
             <div className="flex-1">
-              <p className="font-semibold text-primary-dark capitalize">
+              <p className="font-semibold text-[#0F172A] capitalize">
                 {status}
               </p>
               {message && (
