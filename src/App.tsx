@@ -101,7 +101,7 @@ function App() {
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoOption>(
     cryptoOptions[0]
   );
-  const [amount, setAmount] = useState<string>("");
+  const [amount, setAmount] = useState<string>("1");
   const [paymentAddress, setPaymentAddress] = useState<string>("");
   const [paymentStatus, setPaymentStatus] = useState<
     "pending" | "processing" | "success" | "failed" | null
@@ -271,6 +271,7 @@ function App() {
 
         {/* Amount Input */}
         <PaymentAmountInput
+          disabled={isProcessing || true}
           amount={amount}
           setAmount={setAmount}
           selectedCrypto={selectedCrypto}

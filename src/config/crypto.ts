@@ -83,24 +83,28 @@ export const generatePaymentAddress = (
   return "";
 };
 
-// Generate payment link/URI
 export const generatePaymentURI = (
   crypto: CryptoSymbol,
   amount: number,
   address: string
 ) => {
   const config = CRYPTO_CONFIG[crypto];
+  if (!config) return "";
 
   if (config.chain === "evm") {
-    return `ethereum:${address}?value=${
-      amount * Math.pow(10, config.decimals)
-    }`;
-  }
+    const valueInUnits = amount * 10 ** config.decimals;
 
-  if (config.chain === "solana") {
-    const lamports = amount * Math.pow(10, config.decimals);
-    return `solana:${address}?amount=${lamports}${
-      config.address ? `&spl-token=${config.address}` : ""
+    if (!config.address) {
+      // Native token (ETH, BNB)
+      return `ethereum:${address}?value=${valueInUnits}`;
+    } else {
+      // ERC-20 token (USDT, USDC, etc.)
+      return `ethereum:${address}?value=${valueInUnits}&token=${config.address}`;
+    }
+  } else if (config.chain === "solana") {
+    const amountLamports = amount * 10 ** config.decimals;
+    return `solana:${address}?amount=${amountLamports}&spl-token=${
+      config.address || ""
     }`;
   }
 

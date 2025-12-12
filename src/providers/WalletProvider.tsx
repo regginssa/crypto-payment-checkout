@@ -1,4 +1,5 @@
 import "@rainbow-me/rainbowkit/styles.css";
+import "@solana/wallet-adapter-react-ui/styles.css";
 
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
@@ -15,6 +16,7 @@ import {
 } from "@solana/wallet-adapter-wallets";
 
 import { clusterApiUrl } from "@solana/web3.js";
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
 const config = getDefaultConfig({
   appName: "My RainbowKit App",
@@ -41,7 +43,7 @@ const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         <RainbowKitProvider>
           <ConnectionProvider endpoint={solanaEndpoint}>
             <SolanaWalletProvider wallets={solanaWallets} autoConnect={false}>
-              {children}
+              <WalletModalProvider>{children}</WalletModalProvider>
             </SolanaWalletProvider>
           </ConnectionProvider>
         </RainbowKitProvider>

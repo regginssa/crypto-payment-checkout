@@ -3,6 +3,7 @@ import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 interface PaymentAmountInputProps {
   amount: any;
+  disabled?: boolean;
   setAmount: (val: any) => void;
   selectedCrypto: any;
   error: any;
@@ -10,6 +11,7 @@ interface PaymentAmountInputProps {
 
 const PaymentAmountInput: React.FC<PaymentAmountInputProps> = ({
   amount,
+  disabled,
   setAmount,
   selectedCrypto,
   error,
@@ -33,9 +35,14 @@ const PaymentAmountInput: React.FC<PaymentAmountInputProps> = ({
           placeholder="0.00"
           step="0.000000001"
           min="0"
+          disabled={disabled}
           className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B51EC] transition-all duration-300 ${
+            disabled ? "bg-gray-100 cursor-not-allowed" : ""
+          } ${
             error
               ? "border-red-500 focus:ring-red-500"
+              : disabled
+              ? "border-gray-300 focus:ring-gray-300"
               : "border-[#E2E8F0] focus:border-primary"
           }`}
         />
